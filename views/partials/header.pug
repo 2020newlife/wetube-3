@@ -1,0 +1,13 @@
+header.header
+    .header__column
+        a(href=urls.home)
+            i.fab.fa-youtube
+    .header__column
+        form(action=urls.search, method="get")
+            input(type="text", name="term" placeholder="Searching for ...")
+    .header__column
+        ul
+            li
+                a(href=urls.join) Join
+            li
+                a(href=urls.login) Login
