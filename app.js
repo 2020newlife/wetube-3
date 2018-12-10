@@ -30,8 +30,8 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/", globalRouter);
-app.use("/user", userRouter);
-app.use("/video", videoRouter);
+app.use("/", userRouter);
+app.use("/", videoRouter);
 
 // run
 const PORT = 4000;

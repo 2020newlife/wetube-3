@@ -1,4 +1,6 @@
 extends layouts/main
+include mixins/videoBlock
 
 block content
-    p home
+    each video in videos
+        +videoBlock(video)

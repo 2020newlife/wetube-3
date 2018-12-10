@@ -1,0 +1,11 @@
+extends layouts/main
+
+block content
+    .form-container
+        form(name="editProfileForm", action=urls.editProfile, method="post")
+            label(for="avatar") Avatar
+            input(type="file", id="avatar", name="avatar", placeholder="Avatar")
+            input(type="text", name="name", placeholder="Name")
+            input(type="text", name="email", placeholder="Email")
+            input(type="submit", value="Edit Profile")
+        a.form-container__link(href=urls.user.changePassword) Change Password
