@@ -6,8 +6,6 @@ import bodyParser from 'body-parser';
 
 import urls from './urls';
 import globalRouter from './routers/global.router';
-import userRouter from './routers/user.router';
-import videoRouter from './routers/video.router';
 
 const app = express();
 
@@ -21,17 +19,19 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-// locals
+// locals middleware
 app.use((req, res, next) => {
     res.locals.siteName = "WeTube";
     res.locals.urls = urls;
+    res.locals.user = {
+        id: 123,
+        isLoggedin: true,
+    };
     next();
 });
 
 // routes
 app.use("/", globalRouter);
-app.use("/", userRouter);
-app.use("/", videoRouter);
 
 // run
 const PORT = 4000;

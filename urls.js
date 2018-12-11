@@ -1,15 +1,20 @@
-const prefix_user = "/user"
 const urls = {
     home: "/",
+    search: "/search",
+
     login: "/login",
     logout: "/logout",
     join: "/join",
-    search: "/search",
 
-    user: {
-        editProfile: prefix_user + "/editProfile",
-        changePassword: prefix_user + "/changePassword",
-    }
+    // users
+    upload: "/upload",
+    profile: "/profile",
+    editProfile: "/editProfile",
+    changePassword: "/changePassword",
+
+    // videos
+    videoDetail: "/videoDetail",
+
 
 
 }
