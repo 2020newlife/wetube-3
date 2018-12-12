@@ -1,9 +1,10 @@
+import "./config"
+import "./db";
 import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-
 import urls from './urls';
 import globalRouter from './routers/global.router';
 
@@ -11,6 +12,9 @@ const app = express();
 
 // view engine
 app.set("view engine", "pug");
+
+// static
+app.use("/uploads", express.static("uploads"));
 
 // middlewares
 app.use(helmet());
@@ -34,7 +38,7 @@ app.use((req, res, next) => {
 app.use("/", globalRouter);
 
 // run
-const PORT = 4000;
+const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {
-    console.log(`server on: http://localhost:${PORT}`)
+    console.log(`✅  server on: http://localhost:${PORT}`)
 });

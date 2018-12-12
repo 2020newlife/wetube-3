@@ -1,10 +1,18 @@
 import express from 'express';
 import urls from '../urls';
-import { videos } from '../db';
+import Video from '../models/Video';
+import multer from "multer";
+
+const videoUploader = multer({ dest: 'uploads/videos/' });
 const router = express.Router();
 
-router.get(urls.home, (req, res) => {
-    res.render("home", { pageName: "Home", videos });
+router.get(urls.home, async (req, res) => {
+    try {
+        const videos = await Video.find({});
+        res.render("home", { pageName: "Home", videos });
+    } catch (error) {
+        res.render("home", { pageName: "Home", videos: [] });
+    }
 });
 
 // login
@@ -15,7 +23,7 @@ router.post(urls.login, (req, res) => {
 });
 
 // logout
-router.get(urls.logout, (req, res) => { 
+router.get(urls.logout, (req, res) => {
     // TODO: logout
     res.redirect(urls.home);
 });
@@ -26,7 +34,7 @@ router.post(urls.join, (req, res) => {
     const { name, email, password, password2 } = req.body;
     if (password !== password2) {
         res.status(400);
-        res.render("join", { pageName: "Join" }); 
+        res.render("join", { pageName: "Join" });
     } else {
         // TODO: user join
         // TODO: user login
@@ -44,9 +52,15 @@ router.get(urls.search, (req, res) => {
 router.get(urls.upload, (req, res) => {
     res.render("upload");
 });
-router.post(urls.upload, (req, res) => {
-    // TODO: upload video
-    res.redirect(`${urls.videoDetail}/1234`)
+router.post(urls.upload, videoUploader.single('videoFile'), async (req, res) => {
+    const { path: uploadedUrl } = req.file;
+    const { title, description } = req.body;
+    const newVideo = await Video.create({
+        fileUrl: uploadedUrl,
+        title,
+        description,
+    });
+    res.redirect(`${urls.videoDetail}/${newVideo.id}`)
 });
 
 // profile
@@ -61,10 +75,16 @@ router.get(urls.changePassword, (req, res) => {
 });
 
 // videoDetail
-router.get(`${urls.videoDetail}/:id`, (req, res) => {
-    console.log(req.query);
-    const videoId = req.params.id;
-    res.render("videoDetail", { videoId });
+router.get(`${urls.videoDetail}/:id`, async (req, res) => {
+    const { id } = req.params;
+    const video = await Video.findById(id);
+    res.render("videoDetail", { pageName: "Video Detail", video });
+});
+
+// editVideo
+router.get(`${urls.editVideo}/:id`, (req, res) => {
+    const { id: videoId } = req.params;
+    res.render("editVideo", { pageName: "Edit Video", videoId });
 });
 
 export default router;
