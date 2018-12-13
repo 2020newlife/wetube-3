@@ -107,20 +107,7 @@ router.post(`${urls.editVideo}/:id`, async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
-
-    /*
-    // This Code is working
-    const video = await Video.findById(id);
-    video.title = title;
-    video.description = description;
-    await video.save();
-    */
-
-    // ASK: findOneAndUpdate seemed not working.
-    // If I want to edit second video, the first one is edited.
-    // I'll send screen record to NomadCoder Slack javascript channel.
-    await Video.findOneAndUpdate(id, { title, description });
-
+    await Video.findByIdAndUpdate(id, { title, description });
     res.redirect(`${urls.videoDetail}/${id}`);
   } catch (error) {
     res.redirect(urls.home);
