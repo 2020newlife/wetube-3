@@ -15,7 +15,7 @@ const urls = {
     // videos
     videoDetail: "/videoDetail",
     editVideo: "/editVideo",
-
+    deleteVideo: "/deleteVideo",
 
 
 }
