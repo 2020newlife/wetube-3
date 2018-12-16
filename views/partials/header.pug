@@ -1,21 +1,22 @@
 header.header
-    .header__column
-        a(href=urls.home)
-            i.fab.fa-youtube
-    .header__column
-        form(action=urls.search, method="get")
-            input(type="text", name="term" placeholder="Searching for ...")
-    .header__column
-        ul
-        if !user.isLoggedin
-            li
-                a(href=urls.join) Join
-            li
-                a(href=urls.login) Login
-        else
-            li
-                a(href=urls.upload) Upload
-            li 
-                a(href=urls.profile) Profile
-            li
-                a(href=urls.logout) Log Out
+    .header__wrapper
+        .header__column
+            a(href=urls.home)
+                i.fab.fa-youtube
+        .header__column
+            form(action=urls.search, method="get")
+                input(type="text", placeholder="Search by term...", name="term")
+        .header__column
+            ul
+                if !loggedUser
+                    li
+                        a(href=urls.join) Join
+                    li
+                        a(href=urls.login) Log In
+                else 
+                    li
+                        a(href=`/videos${urls.upload}`) Upload
+                    li
+                        a(href=urls.me) Profile
+                    li
+                        a(href=urls.logout) Log Out
