@@ -1,17 +1,17 @@
 import mongoose from 'mongoose';
 
 mongoose.connect(process.env.DATABASE, {
-    useNewUrlParser: true
+  useNewUrlParser: true
 });
 
 const db = mongoose.connection;
 
-db.once("open", () => {
-    console.log("✅  DB Connected");
+db.once('open', () => {
+  console.log('✅  DB Connected');
 });
 
-db.on("error", (error) => {
-    console.log(`❌  DB Error: ${error}`);
+db.on('error', error => {
+  console.log(`❌  DB Error: ${error}`);
 });
 
 // export const videos = [

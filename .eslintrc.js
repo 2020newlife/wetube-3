@@ -3,6 +3,9 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     'no-console': 'off',
-    'prettier/prettier': ['error']
+    'prettier/prettier': ['error'],
+  },
+  env: {
+    "browser": true
   }
 };

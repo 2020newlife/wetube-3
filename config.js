@@ -5,4 +5,5 @@
 // 대신 import된 모듈은 순서대로 initialized된다고 하므로
 // config.js를 만들어 dotenv.config가 포함된 config.js모듈을 만들고 이를 app.js의 최상위에 import함.
 import dotenv from 'dotenv';
+
 dotenv.config();
