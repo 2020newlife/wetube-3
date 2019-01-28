@@ -16,3 +16,17 @@ main {
 	margin: 0 auto;
 	min-height: 80vh;
 }
+
+button,
+input {
+	width: 100%;
+	padding: 7px 10px;
+	border-radius: 5px;
+	font-size: 14px;
+	color: $black;
+	font-weight: 600;
+	&::placeholder {
+		font-weight: 300;
+		color: rgba(0, 0, 0, 0.7);
+	}
+}
