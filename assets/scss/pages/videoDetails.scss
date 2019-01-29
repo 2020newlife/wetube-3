@@ -54,9 +54,11 @@
 		}
 
 		.video__description {
+			width: 100%;
 			color: $black;
 			font-size: 18px;
 			font-weight: 500;
+			word-break: break-all;
 		}
 	}
 }

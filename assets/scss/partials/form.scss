@@ -24,5 +24,28 @@
 			color: white;
 			text-transform: uppercase;
 		}
+
+		textarea {
+			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+			margin-bottom: 25px;
+			resize: none;
+			overflow: visible;
+			min-height: 300px;
+		}
+
+		.form-container__link--delete {
+			display: inline-block;
+			background-color: $dark-red;
+			width: 100%;
+			color: white;
+			text-align: center;
+			text-transform: uppercase;
+			padding-top: 11px;
+			padding-bottom: 11px;
+			border-radius: 5px;
+			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+			font-size: 14px;
+			font-weight: 600;
+		}
 	}
 }

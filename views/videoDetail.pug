@@ -11,5 +11,5 @@ block content
                     div.video__views 1 view
                 else
                     div.video__views #{video.views} views
-                a(href=`${urls.editVideo}/${video.id}`).video__info-edit Edit Video
+                a.video__info-edit(href=`${urls.editVideo}/${video.id}`) Edit Video
             p.video__description= video.description

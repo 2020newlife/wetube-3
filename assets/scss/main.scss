@@ -18,9 +18,11 @@ main {
 }
 
 button,
-input {
+input,
+textarea {
 	width: 100%;
 	padding: 7px 10px;
+	border: none;
 	border-radius: 5px;
 	font-size: 14px;
 	color: $black;
@@ -29,4 +31,9 @@ input {
 		font-weight: 300;
 		color: rgba(0, 0, 0, 0.7);
 	}
+}
+
+input,
+button {
+	cursor: pointer;
 }
