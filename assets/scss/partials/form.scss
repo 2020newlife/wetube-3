@@ -8,7 +8,22 @@
 		max-width: 400px;
 		margin-bottom: 50px;
 
-		input {
+		.upload-file {
+			padding: 10px;
+			background-color: white;
+			margin-bottom: 25px;
+			box-shadow: $box-shadow;
+			border-radius: 5px;
+			label {
+				display: inline-block;
+				color: $black;
+				font-size: 14px;
+				font-weight: 600;
+				margin-bottom: 10px;
+			}
+		}
+
+		input:not([type="file"]) {
 			padding-top: 10px;
 			padding-bottom: 10px;
 			width: 100%;
@@ -20,7 +35,7 @@
 		}
 
 		input[type="submit"] {
-			background-color: #3498db;
+			background-color: $blue;
 			color: white;
 			text-transform: uppercase;
 		}
@@ -33,7 +48,7 @@
 			min-height: 300px;
 		}
 
-		.form-container__link--delete {
+		.form-container__link {
 			display: inline-block;
 			background-color: $dark-red;
 			width: 100%;

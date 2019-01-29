@@ -33,7 +33,11 @@ textarea {
 	}
 }
 
-input,
+input:not([type="text"]),
 button {
 	cursor: pointer;
+}
+
+input[type="textarea"] {
+	cursor: auto;
 }
