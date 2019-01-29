@@ -8,8 +8,8 @@ block content
             .video__info-header
                 h5.video__title video.title
                 if video.views === 1
-                    span.video__views 1 view
+                    div.video__views 1 view
                 else
-                    span.video__views #{video.views} views
+                    div.video__views #{video.views} views
+                a(href=`${urls.editVideo}/${video.id}`).video__info-edit Edit Video
             p.video__description= video.description
-            a(href=`${urls.editVideo}/${video.id}`).video__info-edit Edit Video

@@ -19,33 +19,37 @@
 		display: flex;
 		flex-direction: column;
 
-		.video__info-edit {
-			align-self: flex-end;
-			background-color: $blue;
-			color: white;
-			padding: 10px 15px;
-			font-size: 15px;
-			font-weight: 600px;
-			text-transform: uppercase;
-			border-radius: 5px;
-		}
-
 		.video__info-header {
 			display: flex;
 			align-items: flex-end;
 			margin-bottom: 20px;
+			width: 100%;
 
 			.video__title {
+				flex-grow: 0;
 				font-size: 30px;
 				color: $black;
 				font-weight: 800;
 				text-transform: uppercase;
 				margin-right: 20px;
 			}
-			span {
+			.video__views {
+				flex-grow: 1;
 				font-size: 15px;
 				color: $black;
 				font-weight: 400;
+				margin-right: 20px;
+			}
+			.video__info-edit {
+				flex-grow: 0;
+				flex-shrink: 0;
+				background-color: $blue;
+				color: white;
+				padding: 10px 15px;
+				font-size: 15px;
+				font-weight: 600px;
+				text-transform: uppercase;
+				border-radius: 5px;
 			}
 		}
 
