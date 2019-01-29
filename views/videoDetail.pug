@@ -1,10 +1,15 @@
 extends layouts/main
 
 block content
-    .video__player
-        video(src=`/${video.fileUrl}`, controls=true)
-    .video__info
-        a(href=`${urls.editVideo}/${video.id}`) Edit Video
-        h5.video__title= video.title
-        span.video__views= video.views
-        p.video__description= video.description
+    .videoDetail_wrapper
+        .video__player
+            video(src=`/${video.fileUrl}`, controls=true)
+        .video__info
+            .video__info-header
+                h5.video__title video.title
+                if video.views === 1
+                    span.video__views 1 view
+                else
+                    span.video__views #{video.views} views
+            p.video__description= video.description
+            a(href=`${urls.editVideo}/${video.id}`).video__info-edit Edit Video
