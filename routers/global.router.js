@@ -3,6 +3,7 @@ import multer from 'multer';
 import fs from 'fs.promised';
 import urls from '../urls';
 import Video from '../models/Video';
+import User from '../models/User';
 
 const videoUploader = multer({ dest: 'uploads/videos/' });
 const router = express.Router();
@@ -36,14 +37,22 @@ router.get(urls.logout, (req, res) => {
 router.get(urls.join, (req, res) => {
   res.render('join', { pageName: 'Join' });
 });
-router.post(urls.join, (req, res) => {
-  const { password, password2 } = req.body;
+router.post(urls.join, async (req, res) => {
+  const { name, email, password, password2 } = req.body;
   if (password !== password2) {
     res.status(400);
     res.render('join', { pageName: 'Join' });
   } else {
-    // TODO: user join
-    // TODO: user login
+    try {
+      const user = await User({
+        name,
+        email
+      });
+      await User.register(user, password);
+      console.log(`${user} registered`);
+    } catch (error) {
+      console.log(error);
+    }
     res.redirect(urls.home);
   }
 });
