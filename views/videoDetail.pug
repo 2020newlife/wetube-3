@@ -6,7 +6,7 @@ block content
             video(src=`/${video.fileUrl}`, controls=true)
         .video__info
             .video__info-header
-                h5.video__title video.title
+                h5.video__title #{video.title}
                 if video.views === 1
                     div.video__views 1 view
                 else
