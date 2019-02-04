@@ -15,7 +15,15 @@ const urls = {
   // videos
   videoDetail: '/videoDetail',
   editVideo: '/editVideo',
-  deleteVideo: '/deleteVideo'
+  deleteVideo: '/deleteVideo',
+
+  // github
+  githubLogin: '/auth/github',
+  githubLoginCallback: '/auth/github/callback',
+
+  // facebook
+  facebookLogin: '/auth/facebook',
+  facebookLoginCallback: '/auth/facebook/callback'
 };
 
 export default urls;

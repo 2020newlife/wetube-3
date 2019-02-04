@@ -1,5 +1,8 @@
 extends layouts/main
 
 block content
-    p profile
+    .user-profile
+        .user-profile__header
+            img.avatar(src=user.avatarUrl)
+            h4.profile__username=user.name
     a(href=urls.editProfile) Edit Profile

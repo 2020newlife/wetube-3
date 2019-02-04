@@ -28,11 +28,16 @@ router.post(urls.join, onlyPublic, userController.postJoin, userController.postL
 router.get(urls.login, onlyPublic, userController.getLogin);
 router.post(urls.login, onlyPublic, userController.postLogin);
 
+// login - github
+router.get(urls.githubLogin, userController.getGithubLogin);
+router.get(urls.githubLoginCallback, userController.getGithubLoginCallback);
+
+// login - facebook
+router.get(urls.facebookLogin, userController.getFacebookLogin);
+router.get(urls.facebookLoginCallback, userController.getFacebookLoginCallback);
+
 // logout
-router.get(urls.logout, onlyPrivate, (req, res) => {
-  // TODO: logout
-  res.redirect(urls.home);
-});
+router.get(urls.logout, onlyPrivate, userController.getLogout);
 
 // search
 router.get(urls.search, async (req, res) => {
@@ -63,7 +68,7 @@ router.post(urls.upload, videoUploader.single('videoFile'), async (req, res) => 
 
 // profile
 router.get(urls.profile, onlyPrivate, (req, res) => {
-  res.render('profile');
+  res.render('profile', { pageName: 'User Profile' });
 });
 router.get(urls.editProfile, onlyPrivate, (req, res) => {
   res.render('editProfile', { pageName: 'Edit Profile' });
