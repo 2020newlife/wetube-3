@@ -5,6 +5,7 @@ import urls from '../urls';
 import Video from '../models/Video';
 
 import * as userController from '../controllers/user.controller';
+import { onlyPublic, onlyPrivate } from '../middlewares';
 
 const videoUploader = multer({ dest: 'uploads/videos/' });
 const router = express.Router();
@@ -20,20 +21,15 @@ router.get(urls.home, async (req, res) => {
 });
 
 // join
-router.get(urls.join, userController.getJoin);
-router.post(urls.join, userController.postJoin);
+router.get(urls.join, onlyPublic, userController.getJoin);
+router.post(urls.join, onlyPublic, userController.postJoin, userController.postLogin);
 
 // login
-router.get(urls.login, (req, res) => {
-  res.render('login', { pageName: 'Login' });
-});
-router.post(urls.login, (req, res) => {
-  // TODO: login
-  res.redirect(urls.home);
-});
+router.get(urls.login, onlyPublic, userController.getLogin);
+router.post(urls.login, onlyPublic, userController.postLogin);
 
 // logout
-router.get(urls.logout, (req, res) => {
+router.get(urls.logout, onlyPrivate, (req, res) => {
   // TODO: logout
   res.redirect(urls.home);
 });
@@ -51,7 +47,7 @@ router.get(urls.search, async (req, res) => {
 });
 
 // upload
-router.get(urls.upload, (req, res) => {
+router.get(urls.upload, onlyPrivate, (req, res) => {
   res.render('upload');
 });
 router.post(urls.upload, videoUploader.single('videoFile'), async (req, res) => {
@@ -66,13 +62,13 @@ router.post(urls.upload, videoUploader.single('videoFile'), async (req, res) => 
 });
 
 // profile
-router.get(urls.profile, (req, res) => {
+router.get(urls.profile, onlyPrivate, (req, res) => {
   res.render('profile');
 });
-router.get(urls.editProfile, (req, res) => {
+router.get(urls.editProfile, onlyPrivate, (req, res) => {
   res.render('editProfile', { pageName: 'Edit Profile' });
 });
-router.get(urls.changePassword, (req, res) => {
+router.get(urls.changePassword, onlyPrivate, (req, res) => {
   res.render('changePassword', { pageName: 'ChangePassword' });
 });
 
@@ -84,7 +80,7 @@ router.get(`${urls.videoDetail}/:id`, async (req, res) => {
 });
 
 // editVideo
-router.get(`${urls.editVideo}/:id`, async (req, res) => {
+router.get(`${urls.editVideo}/:id`, onlyPrivate, async (req, res) => {
   try {
     const { id } = req.params;
     const video = await Video.findById(id);
@@ -105,7 +101,7 @@ router.post(`${urls.editVideo}/:id`, async (req, res) => {
 });
 
 // deleteVideo
-router.get(`${urls.deleteVideo}/:id`, async (req, res) => {
+router.get(`${urls.deleteVideo}/:id`, onlyPrivate, async (req, res) => {
   try {
     const { id } = req.params;
     const video = await Video.findById(id);

@@ -8,15 +8,15 @@ header.header
                 input(type="text", placeholder="Search by term...", name="term")
         .header__column
             ul
-                if !loggedUser
+                if !user
                     li
                         a(href=urls.join) Join
                     li
                         a(href=urls.login) LogIn
                 else 
                     li
-                        a(href=`/videos${urls.upload}`) Upload
+                        a(href=urls.upload) Upload
                     li
-                        a(href=urls.me) Profile
+                        a(href=urls.profile) Profile
                     li
                         a(href=urls.logout) LogOut

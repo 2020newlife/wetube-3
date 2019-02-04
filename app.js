@@ -5,10 +5,17 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import urls from './urls';
+import passport from 'passport';
+import session from 'express-session';
+import ConnectMongo from 'connect-mongo';
+import mongoose from 'mongoose';
 import globalRouter from './routers/global.router';
+import { localMiddleware } from './middlewares';
+import './passport';
 
 const app = express();
+
+const CookieStore = ConnectMongo(session);
 
 // view engine
 app.set('view engine', 'pug');
@@ -23,17 +30,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    store: new CookieStore({ mongooseConnection: mongoose.connection })
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
-// locals middleware
-app.use((req, res, next) => {
-  res.locals.siteName = 'WeTube';
-  res.locals.urls = urls;
-  res.locals.user = {
-    id: 123,
-    isLoggedin: true
-  };
-  next();
-});
+// locals middlewares
+app.use(localMiddleware);
 
 // routes
 app.use('/', globalRouter);
