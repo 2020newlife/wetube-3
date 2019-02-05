@@ -46,7 +46,9 @@ export const getGithubLoginCallback = passport.authenticate('github', {
 });
 
 export const githubLoginCallBack = async (_, __, profile, cb) => {
-  const { id, avatar_url, name, email } = profile._json;
+  const {
+    _json: { id, avatar_url: avatarUrl, name, email }
+  } = profile;
   try {
     if (email == null) {
       throw new Error('github email is null');
@@ -55,7 +57,7 @@ export const githubLoginCallBack = async (_, __, profile, cb) => {
     const user = await User.findOne({ email });
     if (user) {
       user.githubId = id;
-      user.avatarUrl = avatar_url;
+      user.avatarUrl = avatarUrl;
       user.save();
       return cb(null, user);
     }
@@ -64,7 +66,7 @@ export const githubLoginCallBack = async (_, __, profile, cb) => {
       email,
       name,
       githubId: id,
-      avatarUrl: avatar_url
+      avatarUrl
     });
     return cb(null, newUser);
   } catch (error) {
@@ -82,7 +84,9 @@ export const getFacebookLoginCallback = passport.authenticate('facebook', {
 
 export const facebookLoginCallback = async (accessToken, refreshToken, profile, cb) => {
   console.log(profile);
-  const { id, name, email } = profile._json;
+  const {
+    _json: { id, name, email }
+  } = profile;
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -146,5 +150,31 @@ export const postEditProfile = async (req, res) => {
     res.redirect(urls.profileMe);
   } catch (error) {
     res.redirect(urls.profileMe);
+  }
+};
+
+// change password
+export const getChangePassword = (req, res) => {
+  res.render('changePassword', { pageName: 'ChangePassword' });
+};
+
+export const postChangePassword = async (req, res) => {
+  const {
+    body: { oldPassword, newPassword, confirmPassword }
+  } = req;
+
+  try {
+    if (newPassword !== confirmPassword) {
+      res.status(400);
+      res.redirect(urls.changePassword);
+      return;
+    }
+
+    await req.user.changePassword(oldPassword, newPassword);
+
+    res.redirect(urls.profileMe);
+  } catch (error) {
+    res.status(400);
+    res.redirect(urls.changePassword);
   }
 };

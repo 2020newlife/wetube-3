@@ -7,9 +7,12 @@ block content
         .video__info
             .video__info-header
                 h5.video__title #{video.title}
+                a.video__author(href=`/profile/${video.creator.id}`)
+                    |by #{video.creator.name}
                 if video.views === 1
                     div.video__views 1 view
                 else
                     div.video__views #{video.views} views
-                a.video__info-edit(href=`${urls.editVideo}/${video.id}`) Edit Video
+                if video.creator.id === loginUser.id    
+                    a.video__info-edit(href=`${urls.editVideo}/${video.id}`) Edit Video
             p.video__description= video.description

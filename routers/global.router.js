@@ -1,11 +1,11 @@
 import express from 'express';
-import multer from 'multer';
 import fs from 'fs.promised';
 import urls from '../urls';
 import Video from '../models/Video';
 
 import * as userController from '../controllers/user.controller';
 import { onlyPublic, onlyPrivate, uploadVideo, uploadAvatar } from '../middlewares';
+import { getUpload, postUpload, getVideoDetail } from '../controllers/video.controller';
 
 const router = express.Router();
 
@@ -51,35 +51,19 @@ router.get(urls.search, async (req, res) => {
 });
 
 // upload
-router.get(urls.upload, onlyPrivate, (req, res) => {
-  res.render('upload');
-});
-router.post(urls.upload, uploadVideo, async (req, res) => {
-  const { path: uploadedUrl } = req.file;
-  const { title, description } = req.body;
-  const newVideo = await Video.create({
-    fileUrl: uploadedUrl,
-    title,
-    description
-  });
-  res.redirect(`${urls.videoDetail}/${newVideo.id}`);
-});
+router.get(urls.upload, onlyPrivate, getUpload);
+router.post(urls.upload, uploadVideo, postUpload);
 
 // profile
 router.get(urls.profileMe, onlyPrivate, userController.getMyProfile);
 router.get(urls.profileOther, onlyPrivate, userController.getOtherProfile);
 router.get(urls.editProfile, onlyPrivate, userController.getEditProfile);
 router.post(urls.editProfile, onlyPrivate, uploadAvatar, userController.postEditProfile);
-router.get(urls.changePassword, onlyPrivate, (req, res) => {
-  res.render('changePassword', { pageName: 'ChangePassword' });
-});
+router.get(urls.changePassword, onlyPrivate, userController.getChangePassword);
+router.post(urls.changePassword, onlyPrivate, userController.postChangePassword);
 
 // videoDetail
-router.get(`${urls.videoDetail}/:id`, async (req, res) => {
-  const { id } = req.params;
-  const video = await Video.findById(id);
-  res.render('videoDetail', { pageName: 'Video Detail', video });
-});
+router.get(`${urls.videoDetail}/:id`, getVideoDetail);
 
 // editVideo
 router.get(`${urls.editVideo}/:id`, onlyPrivate, async (req, res) => {
