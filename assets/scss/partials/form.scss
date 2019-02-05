@@ -1,66 +1,51 @@
 .form-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-	form {
-		width: 100%;
-		max-width: 400px;
-		margin-bottom: 50px;
+  form {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 50px;
 
-		.upload-file {
-			padding: 10px;
-			background-color: white;
-			margin-bottom: 25px;
-			box-shadow: $box-shadow;
-			border-radius: 5px;
-			label {
-				display: inline-block;
-				color: $black;
-				font-size: 14px;
-				font-weight: 600;
-				margin-bottom: 10px;
-			}
-		}
+    .upload-file {
+      padding: 10px;
+      background-color: white;
+      margin-bottom: 25px;
+      box-shadow: $box-shadow;
+      border-radius: 5px;
+      label {
+        display: inline-block;
+        color: $black;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+    }
 
-		input:not([type="file"]) {
-			padding-top: 10px;
-			padding-bottom: 10px;
-			width: 100%;
-			display: block;
-			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-			&:not(:last-child) {
-				margin-bottom: 20px;
-			}
-		}
+    input:not([type="file"]) {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: 100%;
+      display: block;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
 
-		input[type="submit"] {
-			background-color: $blue;
-			color: white;
-			text-transform: uppercase;
-		}
+    input[type="submit"] {
+      background-color: $blue;
+      color: white;
+      text-transform: uppercase;
+    }
 
-		textarea {
-			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-			margin-bottom: 25px;
-			resize: none;
-			overflow: visible;
-			min-height: 300px;
-		}
-
-		.form-container__link {
-			display: inline-block;
-			background-color: $dark-red;
-			width: 100%;
-			color: white;
-			text-align: center;
-			text-transform: uppercase;
-			padding-top: 11px;
-			padding-bottom: 11px;
-			border-radius: 5px;
-			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-			font-size: 14px;
-			font-weight: 600;
-		}
-	}
+    textarea {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin-bottom: 25px;
+      resize: none;
+      overflow: visible;
+      min-height: 300px;
+    }
+  }
 }

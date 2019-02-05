@@ -8,7 +8,7 @@ header.header
                 input(type="text", placeholder="Search by term...", name="term")
         .header__column
             ul
-                if !user
+                if !loginUser
                     li
                         a(href=urls.join) Join
                     li
@@ -17,6 +17,6 @@ header.header
                     li
                         a(href=urls.upload) Upload
                     li
-                        a(href=urls.profile) Profile
+                        a(href=urls.profileMe) Profile
                     li
                         a(href=urls.logout) LogOut

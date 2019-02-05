@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
 mongoose.connect(process.env.DATABASE, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useFindAndModify: false
 });
 
 const db = mongoose.connection;

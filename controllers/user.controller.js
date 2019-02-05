@@ -37,13 +37,7 @@ export const postLogin = passport.authenticate('local', {
   failureRedirect: urls.login
 });
 
-// logout
-export const getLogout = (req, res) => {
-  req.logout();
-  res.redirect(urls.home);
-};
-
-// github
+// login - github
 export const getGithubLogin = passport.authenticate('github');
 
 export const getGithubLoginCallback = passport.authenticate('github', {
@@ -78,7 +72,7 @@ export const githubLoginCallBack = async (_, __, profile, cb) => {
   }
 };
 
-// facebook
+// login - facebook
 export const getFacebookLogin = passport.authenticate('facebook');
 
 export const getFacebookLoginCallback = passport.authenticate('facebook', {
@@ -107,5 +101,50 @@ export const facebookLoginCallback = async (accessToken, refreshToken, profile, 
     return cb(null, newUser);
   } catch (error) {
     return cb(error);
+  }
+};
+
+// logout
+export const getLogout = (req, res) => {
+  req.logout();
+  res.redirect(urls.home);
+};
+
+// profile
+export const getMyProfile = (req, res) => {
+  console.log('getMyProfile');
+  res.render('profile', { pageName: 'User Profile', user: req.user });
+};
+
+export const getOtherProfile = async (req, res) => {
+  console.log('getOtherProfile');
+  try {
+    const user = await User.findById(req.params.userId);
+    res.render('profile', { pageName: 'User Profile', user });
+  } catch (error) {
+    res.redirect(urls.home);
+  }
+};
+
+export const getEditProfile = (req, res) => {
+  res.render('editProfile', { pageName: 'Edit Profile' });
+};
+
+export const postEditProfile = async (req, res) => {
+  const {
+    body: { name, email },
+    file
+  } = req;
+  console.log(name, email, file);
+  try {
+    const updateUser = await User.findByIdAndUpdate(req.user.id, {
+      name,
+      email,
+      avatarUrl: file ? file.path : req.user.avatarUrl
+    });
+    console.log(updateUser);
+    res.redirect(urls.profileMe);
+  } catch (error) {
+    res.redirect(urls.profileMe);
   }
 };

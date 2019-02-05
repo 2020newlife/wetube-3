@@ -2,11 +2,11 @@ extends layouts/main
 
 block content
     .form-container
-        form(name="editProfileForm", action=urls.editProfile, method="post")
+        form(name="editProfileForm", action=urls.editProfile, method="post", enctype="multipart/form-data")
             .upload-file
                 label(for="avatar") Avatar
-                input(type="file", id="avatar", name="avatar", placeholder="Avatar")
-            input(type="text", name="name", placeholder="Name")
-            input(type="text", name="email", placeholder="Email")
+                input(type="file", id="avatar", name="avatar", placeholder="Avatar", accept="image/*")
+            input(type="text", name="name", placeholder="Name", value=loginUser.name)
+            input(type="text", name="email", placeholder="Email", value=loginUser.email)
             input(type="submit", value="Edit Profile")
             a.form-container__link(href=urls.changePassword) Change Password
