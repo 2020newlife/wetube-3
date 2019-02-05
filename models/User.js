@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
   videos: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comment'
+      ref: 'Video'
     }
   ]
 });
@@ -24,6 +24,13 @@ const UserSchema = mongoose.Schema({
 UserSchema.plugin(passportLocalMongoose, {
   usernameField: 'email'
 });
+
+UserSchema.statics.serializeUser = () => (user, cb) => cb(null, user.id);
+
+UserSchema.statics.deserializeUser = function() {
+  const self = this;
+  return (id, cb) => self.findById(id, cb);
+};
 
 const model = mongoose.model('User', UserSchema);
 

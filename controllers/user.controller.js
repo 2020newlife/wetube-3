@@ -115,15 +115,14 @@ export const getLogout = (req, res) => {
 };
 
 // profile
-export const getMyProfile = (req, res) => {
-  console.log('getMyProfile');
-  res.render('profile', { pageName: 'User Profile', user: req.user });
+export const getMyProfile = async (req, res) => {
+  const user = await User.findById(req.user.id).populate('videos');
+  res.render('profile', { pageName: 'User Profile', user });
 };
 
 export const getOtherProfile = async (req, res) => {
-  console.log('getOtherProfile');
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params.userId).populate('videos');
     res.render('profile', { pageName: 'User Profile', user });
   } catch (error) {
     res.redirect(urls.home);

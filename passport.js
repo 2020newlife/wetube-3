@@ -27,8 +27,8 @@ passport.use(
       clientID: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
       callbackURL: `https://gentle-frog-23.localtunnel.me${urls.facebookLoginCallback}`,
-      profileFields: [ 'id', 'displayName', 'email' ],
-      scope: [ 'public_profile', 'email' ]
+      profileFields: ['id', 'displayName', 'email'],
+      scope: ['public_profile', 'email']
     },
     facebookLoginCallback
   )

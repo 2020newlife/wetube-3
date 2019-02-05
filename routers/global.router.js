@@ -1,11 +1,10 @@
 import express from 'express';
-import fs from 'fs.promised';
 import urls from '../urls';
 import Video from '../models/Video';
 
 import * as userController from '../controllers/user.controller';
+import * as videoController from '../controllers/video.controller';
 import { onlyPublic, onlyPrivate, uploadVideo, uploadAvatar } from '../middlewares';
-import { getUpload, postUpload, getVideoDetail } from '../controllers/video.controller';
 
 const router = express.Router();
 
@@ -51,8 +50,8 @@ router.get(urls.search, async (req, res) => {
 });
 
 // upload
-router.get(urls.upload, onlyPrivate, getUpload);
-router.post(urls.upload, uploadVideo, postUpload);
+router.get(urls.upload, onlyPrivate, videoController.getUpload);
+router.post(urls.upload, uploadVideo, videoController.postUpload);
 
 // profile
 router.get(urls.profileMe, onlyPrivate, userController.getMyProfile);
@@ -63,18 +62,10 @@ router.get(urls.changePassword, onlyPrivate, userController.getChangePassword);
 router.post(urls.changePassword, onlyPrivate, userController.postChangePassword);
 
 // videoDetail
-router.get(`${urls.videoDetail}/:id`, getVideoDetail);
+router.get(`${urls.videoDetail}/:id`, videoController.getVideoDetail);
 
 // editVideo
-router.get(`${urls.editVideo}/:id`, onlyPrivate, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const video = await Video.findById(id);
-    res.render('editVideo', { pageName: `Edit ${video.title}`, video });
-  } catch (error) {
-    res.redirect(urls.home);
-  }
-});
+router.get(`${urls.editVideo}/:id`, onlyPrivate, videoController.getEditVideo);
 router.post(`${urls.editVideo}/:id`, async (req, res) => {
   try {
     const { id } = req.params;
@@ -87,16 +78,6 @@ router.post(`${urls.editVideo}/:id`, async (req, res) => {
 });
 
 // deleteVideo
-router.get(`${urls.deleteVideo}/:id`, onlyPrivate, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const video = await Video.findById(id);
-    await fs.unlink(video.fileUrl);
-    await video.remove();
-  } catch (error) {
-    console.log(error);
-  }
-  res.redirect(urls.home);
-});
+router.get(`${urls.deleteVideo}/:id`, onlyPrivate, videoController.getDeleteVideo);
 
 export default router;
