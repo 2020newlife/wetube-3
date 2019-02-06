@@ -1,9 +1,9 @@
 extends layouts/main
+include mixins/videoPlayer
 
 block content
     .videoDetail_wrapper
-        .video__player
-            video(src=`/${video.fileUrl}`, controls=true)
+        +videoPlayer(video)
         .video__info
             .video__info-header
                 h5.video__title #{video.title}
@@ -13,6 +13,6 @@ block content
                     div.video__views 1 view
                 else
                     div.video__views #{video.views} views
-                if video.creator.id === loginUser.id    
+                if loginUser && video.creator.id === loginUser.id    
                     a.video__info-edit(href=`${urls.editVideo}/${video.id}`) Edit Video
             p.video__description= video.description

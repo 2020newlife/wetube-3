@@ -4,7 +4,8 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'prettier/prettier': [ 'error' ],
-    'func-names': 'off'
+    'func-names': 'off',
+    'no-use-before-define': 'off'
   },
   env: {
     browser: true
