@@ -49,6 +49,9 @@
         color: $black;
         font-weight: 400;
         margin-right: 20px;
+        span {
+          margin-right: 5px;
+        }
       }
       .video__info-edit {
         flex-grow: 0;

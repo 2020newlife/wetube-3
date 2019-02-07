@@ -10,6 +10,7 @@ import session from 'express-session';
 import ConnectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 import globalRouter from './routers/global.router';
+import apiRouter from './routers/api.router';
 import { localMiddleware } from './middlewares';
 import './passport';
 
@@ -46,6 +47,7 @@ app.use(localMiddleware);
 
 // routes
 app.use('/', globalRouter);
+app.use('/api', apiRouter);
 
 // run
 const PORT = process.env.SERVER_PORT || 4000;

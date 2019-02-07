@@ -1,3 +1,5 @@
+const API_PREFIX = '/api';
+
 const urls = {
   home: '/',
   search: '/search',
@@ -24,7 +26,11 @@ const urls = {
 
   // facebook
   facebookLogin: '/auth/facebook',
-  facebookLoginCallback: '/auth/facebook/callback'
+  facebookLoginCallback: '/auth/facebook/callback',
+
+  api: {
+    registerView: `/view/:videoId`
+  }
 };
 
 export default urls;
