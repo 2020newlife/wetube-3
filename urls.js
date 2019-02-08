@@ -1,5 +1,3 @@
-const API_PREFIX = '/api';
-
 const urls = {
   home: '/',
   search: '/search',
@@ -30,7 +28,8 @@ const urls = {
 
   api: {
     registerView: '/view/:videoId',
-    addComment: '/comment/add'
+    addComment: '/comment/add',
+    deleteComment: '/comment/delete'
   }
 };
 

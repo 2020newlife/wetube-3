@@ -9,9 +9,13 @@ const CommentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  creator: {
+  creatorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+  videoId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Video'
   }
 });
 
