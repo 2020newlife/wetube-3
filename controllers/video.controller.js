@@ -1,6 +1,7 @@
 import fs from 'fs.promised';
 import Video from '../models/Video';
 import urls from '../urls';
+import Comment from '../models/Comment';
 
 export const getUpload = (req, res) => {
   res.render('upload');
@@ -22,7 +23,9 @@ export const postUpload = async (req, res) => {
 
 export const getVideoDetail = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate('creator');
+  const video = await Video.findById(id)
+    .populate('creator')
+    .populate('comments');
   res.render('videoDetail', { pageName: 'Video Detail', video });
 };
 
@@ -96,6 +99,27 @@ export const postRegisterView = async (req, res) => {
     res.send({ views: video.views });
   } catch (error) {
     res.status(400);
+    res.end();
+  }
+};
+
+export const postAddComment = async (req, res) => {
+  const {
+    body: { videoId, comment },
+    user
+  } = req;
+  try {
+    const video = await Video.findById(videoId);
+    const newComment = await Comment.create({
+      comment,
+      creator: user.id
+    });
+    video.comments.push(newComment.id);
+    video.save();
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+  } finally {
     res.end();
   }
 };

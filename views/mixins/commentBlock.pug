@@ -1,0 +1,5 @@
+mixin commentBlock(comment)
+    .commentBlock
+        span=comment.comment
+        if comment.creator == loginUser.id
+            button(onclick=`handleDeleteComment('${comment.id}')`) x

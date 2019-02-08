@@ -1,0 +1,32 @@
+.commentBlock {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  background-color: #74b9ff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border-bottom-left-radius: 0px;
+
+  span {
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+  }
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  button {
+    position: absolute;
+    background-color: $red;
+    color: white;
+    text-transform: uppercase;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    right: -10px;
+    top: -10px;
+  }
+}

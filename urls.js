@@ -29,7 +29,8 @@ const urls = {
   facebookLoginCallback: '/auth/facebook/callback',
 
   api: {
-    registerView: `/view/:videoId`
+    registerView: '/view/:videoId',
+    addComment: '/comment/add'
   }
 };
 

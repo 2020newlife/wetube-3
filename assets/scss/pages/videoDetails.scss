@@ -74,4 +74,23 @@
       word-break: break-all;
     }
   }
+
+  .video__comments {
+    width: 100%;
+    max-width: 850px;
+    margin-top: 20px;
+
+    .video__comment-number {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .video__comments-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 }
