@@ -1,15 +1,24 @@
-import fs from 'fs.promised';
+// import fs from 'fs.promised';
+import aws from 'aws-sdk';
 import Video from '../models/Video';
 import urls from '../urls';
 import Comment from '../models/Comment';
+
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_KEY,
+  secretAccessKey: process.env.AWS_SECRET,
+  region: 'ap-northeast-2'
+});
 
 export const getUpload = (req, res) => {
   res.render('upload');
 };
 
 export const postUpload = async (req, res) => {
-  const { path: uploadedUrl } = req.file;
-  const { title, description } = req.body;
+  const {
+    body: { title, description },
+    file: { location: uploadedUrl }
+  } = req;
   const newVideo = await Video.create({
     fileUrl: uploadedUrl,
     title,
@@ -80,7 +89,26 @@ export const getDeleteVideo = async (req, res) => {
     if (video.creator.id !== req.user.id) {
       throw Error();
     } else {
-      await fs.unlink(video.fileUrl);
+      // file delete on local storage
+      // await fs.unlink(video.fileUrl);
+      // await video.remove();
+
+      // file delete on aws s3
+      const tmpArray = video.fileUrl.split('/');
+      const fileName = tmpArray[tmpArray.length - 1];
+      const params = {
+        Bucket: `${process.env.AWS_BUCKET}/video`,
+        Key: fileName
+      };
+      s3.deleteObject(params, (err, data) => {
+        if (err) {
+          console.log('video delete error!');
+          console.log(err, err.stack);
+        } else {
+          console.log('video delete sucess');
+          console.log(data);
+        }
+      });
       await video.remove();
     }
   } catch (error) {
@@ -88,6 +116,26 @@ export const getDeleteVideo = async (req, res) => {
   }
   res.redirect(urls.home);
 };
+
+/*
+export const testDeleteVideo = (req, res) => {
+  const params = {
+    Bucket: `${process.env.AWS_BUCKET}/video`,
+    Key: 'cd58504e067ac8d61facb692d17836d4' // if any sub folder-> path/of/the/folder.ext
+  };
+  s3.deleteObject(params, (err, data) => {
+    if (err) {
+      console.log('error!');
+      console.log(err, err.stack);
+    } else {
+      console.log('sucess');
+      console.log(data);
+    }
+  });
+
+  res.end();
+};
+*/
 
 export const postRegisterView = async (req, res) => {
   const { videoId } = req.params;
