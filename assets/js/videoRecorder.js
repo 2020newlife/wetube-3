@@ -6,6 +6,7 @@ let streamObject;
 let videoRecorder;
 
 const handleVideoData = event => {
+  console.log('on data available');
   const { data: videoFile } = event;
   const link = document.createElement('a');
   link.href = URL.createObjectURL(videoFile);
@@ -15,40 +16,45 @@ const handleVideoData = event => {
 };
 
 const stopRecording = () => {
+  console.log('stop recording');
+  // 브라우저 탭쪽이나 노트북 카메라의 녹화중 표시 중지
+  // ref: https://stackoverflow.com/a/44274928/911528
+  streamObject.getTracks().forEach(track => track.stop());
+
   videoRecorder.stop();
   recordButton.removeEventListener('click', stopRecording);
-  recordButton.addEventListener('click', getVideo);
+  recordButton.addEventListener('click', startRecording);
   recordButton.innerHTML = 'Start recording';
 };
 
-const startRecording = () => {
-  videoRecorder = new MediaRecorder(streamObject);
-  videoRecorder.start();
-  videoRecorder.addEventListener('dataavailable', handleVideoData);
-  recordButton.addEventListener('click', stopRecording);
-};
-
-const getVideo = async () => {
+const startRecording = async () => {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
+    streamObject = await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: { width: 1280, height: 720 }
     });
-    videoPreview.srcObject = stream;
+
+    videoPreview.srcObject = streamObject;
     videoPreview.muted = true;
     videoPreview.play();
+
+    // start recording
+    videoRecorder = new MediaRecorder(streamObject);
+    videoRecorder.addEventListener('dataavailable', handleVideoData);
+    videoRecorder.start();
+
+    recordButton.addEventListener('click', stopRecording);
     recordButton.innerHTML = 'Stop recording';
-    streamObject = stream;
-    startRecording();
   } catch (error) {
+    console.log(error);
     recordButton.innerHTML = "Can't record";
   } finally {
-    recordButton.removeEventListener('click', getVideo);
+    recordButton.removeEventListener('click', startRecording);
   }
 };
 
 function initVideoRecorder() {
-  recordButton.addEventListener('click', getVideo);
+  recordButton.addEventListener('click', startRecording);
 }
 
 if (recorderContainer) {

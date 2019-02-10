@@ -8,7 +8,9 @@ block content
         form(name="uploadForm", action=urls.upload, method="post", enctype="multipart/form-data")
             .upload-file
                 label(for="file") Video File
-                input(type="file", id="file" name="videoFile", placeholder="Video File", required=true, accept="video/*")
+                //- ISSUE: 사파리에서는 video/*로만 하면 mp4도 선택할 수 없음. video/webm도 안먹음 
+                //- ref: https://stackoverflow.com/questions/19107685/safari-input-type-file-accept-video-ignores-mp4-files
+                input(type="file", id="file" name="videoFile", placeholder="Video File", required=true, accept="video/webm,video/mp4,video/x-m4v,video/*")
             input(type="text", name="title", placeholder="Title", required=true)
             input(type="textarea", name="description", placeholder="description")
             input(type="submit", value="Upload Video")

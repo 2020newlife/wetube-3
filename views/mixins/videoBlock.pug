@@ -1,7 +1,11 @@
 mixin videoBlock(video={})
     .videoBlock
         a(href=`${urls.videoDetail}/${video.id}`)
-            video.videoBlock__thumbnail(src=video.fileUrl, controls=true)
+            //- ISSUE: safari에서 재생이 안되어 찾아보니 좀 바뀐듯 함
+            //- video.videoBlock__thumbnail(src=video.fileUrl, controls=false, type="video/mp4,video/*")
+            video.videoBlock__thumbnail
+                source(src=video.fileUrl type="video/mp4")
+                source(src=video.fileUrl type="video/webm")
             h4.videoBlock__title= video.title
             if video.views === 1
                 h6.videoBlock__views 1 view

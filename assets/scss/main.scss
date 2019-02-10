@@ -46,6 +46,10 @@ input[type="textarea"] {
   display: inline-block;
   background-color: $dark-red;
   width: 100%;
+  /*ISSUE: 사파리에서 color속성이 override가 안되어서 추가해주었는데 왜 되는지는 모르겠다
+  ref: https://stackoverflow.com/questions/21400182/safari-css-font-color-issue
+  */
+  -webkit-text-fill-color: white;
   color: white;
   text-align: center;
   text-transform: uppercase;
