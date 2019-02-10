@@ -115,12 +115,7 @@ export const getLogout = (req, res) => {
 };
 
 // profile
-export const getMyProfile = async (req, res) => {
-  const user = await User.findById(req.user.id).populate('videos');
-  res.render('profile', { pageName: 'User Profile', user });
-};
-
-export const getOtherProfile = async (req, res) => {
+export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).populate('videos');
     res.render('profile', { pageName: 'User Profile', user });
@@ -144,9 +139,9 @@ export const postEditProfile = async (req, res) => {
       email,
       avatarUrl: file ? file.location : req.user.avatarUrl
     });
-    res.redirect(urls.profileMe);
+    res.redirect(urls.profile);
   } catch (error) {
-    res.redirect(urls.profileMe);
+    res.redirect(urls.profile);
   }
 };
 
@@ -169,7 +164,7 @@ export const postChangePassword = async (req, res) => {
 
     await req.user.changePassword(oldPassword, newPassword);
 
-    res.redirect(urls.profileMe);
+    res.redirect(urls.profile);
   } catch (error) {
     res.status(400);
     res.redirect(urls.changePassword);

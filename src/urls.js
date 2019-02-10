@@ -8,8 +8,7 @@ const urls = {
 
   // users
   upload: '/upload',
-  profileMe: '/profile/me',
-  profileOther: '/profile/:userId',
+  profile: '/profile/:userId',
   editProfile: '/editProfile',
   changePassword: '/changePassword',
 

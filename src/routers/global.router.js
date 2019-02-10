@@ -54,8 +54,7 @@ router.get(urls.upload, onlyPrivate, videoController.getUpload);
 router.post(urls.upload, uploadVideo, videoController.postUpload);
 
 // profile
-router.get(urls.profileMe, onlyPrivate, userController.getMyProfile);
-router.get(urls.profileOther, onlyPrivate, userController.getOtherProfile);
+router.get(urls.profile, userController.getProfile);
 router.get(urls.editProfile, onlyPrivate, userController.getEditProfile);
 router.post(urls.editProfile, onlyPrivate, uploadAvatar, userController.postEditProfile);
 router.get(urls.changePassword, onlyPrivate, userController.getChangePassword);

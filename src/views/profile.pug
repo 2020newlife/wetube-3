@@ -7,7 +7,7 @@ block content
             if user.avatarUrl
                 img.user-avatar(src=user.avatarUrl)
             h4.profile__username=user.name
-        if user.id === loginUser.id
+        if loginUser && user.id === loginUser.id
             .user-profile__buttons
                 a.form-container__link(href=urls.editProfile) Edit Profile
                 a.form-container__link(href=urls.changePassword) Change Password

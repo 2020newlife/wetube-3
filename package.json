@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:server": "nodemon --exec babel-node app.js",
-    "dev:assets": "WEBPACK_ENV=development webpack -w",
-    "build:assets": "WEBPACK_ENV=production webpack",
     "lint": "eslint '**/*.{js,jsx}' --fix",
-    "tunnel": "lt --port 4000"
+    "tunnel": "lt --port 4000",
+    "dev:server": "nodemon --exec babel-node src/app.js",
+    "dev:assets": "WEBPACK_ENV=development webpack -w --config src/webpack.config.js",
+    "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.config.js'",
+    "build:assets": "WEBPACK_ENV=production webpack --config src/webpack.config.js",
+    "prebuild": "rm -rf build",
+    "build": "npm run build:server && npm run build:assets && cp -R src/static build && cp -R src/views build",
+    "start": "npm run build && node build/app.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import './config';
 import './db';
 import express from 'express';
@@ -9,6 +10,7 @@ import passport from 'passport';
 import session from 'express-session';
 import ConnectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
+import path from 'path';
 import globalRouter from './routers/global.router';
 import apiRouter from './routers/api.router';
 import { localMiddleware } from './middlewares';
@@ -20,10 +22,13 @@ const CookieStore = ConnectMongo(session);
 
 // view engine
 app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 // static
+// app.use('/uploads', express.static('uploads'));
+// app.use('/static', express.static('static'));
 app.use('/uploads', express.static('uploads'));
-app.use('/static', express.static('static'));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // middlewares
 app.use(helmet());

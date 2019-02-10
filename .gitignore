@@ -81,3 +81,4 @@ typings/
 package-lock.json
 uploads/
 static/
+build/
