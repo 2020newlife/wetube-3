@@ -2,6 +2,6 @@
 https://academy.nomadcoders.co/
 
 ## 실행순서
-$mongod
-$npm run dev:assets
-$npm run dev:server
+- $mongod
+- $npm run dev:assets
+- $npm run dev:server
