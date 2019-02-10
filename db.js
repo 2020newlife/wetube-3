@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-mongoose.connect(process.env.DATABASE, {
+mongoose.connect(process.env.DATABASE_MLAB, {
   useNewUrlParser: true,
   useFindAndModify: false
 });

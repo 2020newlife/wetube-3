@@ -1,3 +1,6 @@
+// ISSUE: duration bug
+import getBlobDuration from 'get-blob-duration';
+
 const videoContainer = document.getElementById('jsVideoPlayer');
 const videoPlayer = document.querySelector('#jsVideoPlayer video');
 const playButton = document.getElementById('jsPlayButton');
@@ -112,8 +115,19 @@ function setCurrentTime() {
   currentTime.innerHTML = formatDate(Math.floor(videoPlayer.currentTime));
 }
 
-function setTotalTime() {
+async function setTotalTime() {
   const totalTimeString = formatDate(videoPlayer.duration);
+
+  // ISSUE: getBlobDuration 안된다
+  // console.log('Sadfasdfasdf');
+  // const videoBlob = await fetch(videoPlayer.src).then(response => response.blob());
+  // videoBlob.type = 'video/mp4';
+  // console.log(videoBlob);
+  // const duration = await getBlobDuration(videoBlob);
+  // console.log('duration', duration);
+  // const totalTimeString = formatDate(duration);
+  // console.log('totalTimeString', duration);
+
   totalTime.innerHTML = totalTimeString;
   setInterval(setCurrentTime, 1000);
 }

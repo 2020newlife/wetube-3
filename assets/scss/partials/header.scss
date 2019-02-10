@@ -1,58 +1,62 @@
 .header {
-	background-color: $red;
-	min-height: 50px;
-	margin-bottom: 20px;
-	display: flex;
+  background-color: $red;
+  min-height: 50px;
+  margin-bottom: 20px;
+  display: flex;
 
-	.header__wrapper {
-		width: 100%;
-		display: flex;
-		align-items: center;
-	}
+  .header__wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
 
-	.header__column {
-		flex-grow: 0;
-		flex-shrink: 0;
-		padding: 0 20px;
+  .header__column {
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 0 20px;
 
-		i {
-			color: white;
-			font-size: 30px;
-		}
-		ul {
-			display: flex;
-			color: white;
-			font-size: 15px;
-			font-weight: 700;
-			text-transform: uppercase;
+    i {
+      /*ISSUE: 사파리에서 color속성이 override가 안되어서 추가해주었는데 왜 되는지는 모르겠다
+  ref: https://stackoverflow.com/questions/21400182/safari-css-font-color-issue
+  */
+      -webkit-text-fill-color: white;
+      color: white;
+      font-size: 30px;
+    }
+    ul {
+      display: flex;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
 
-			li:not(:last-child) {
-				margin-right: 10px;
-			}
-		}
+      li:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
 
-		&:nth-child(2) {
-			flex-grow: 1;
-			flex-shrink: 1;
-			display: flex;
-			justify-content: center;
-			padding: 0;
+    &:nth-child(2) {
+      flex-grow: 1;
+      flex-shrink: 1;
+      display: flex;
+      justify-content: center;
+      padding: 0;
 
-			form {
-				width: 100%;
-				input {
-					width: 100%;
-					padding: 7px 10px;
-					border-radius: 5px;
-					font-size: 14px;
-					color: $black;
-					font-weight: 600;
-					&::placeholder {
-						font-weight: 300;
-						color: rgba(0, 0, 0, 0.7);
-					}
-				}
-			}
-		}
-	}
+      form {
+        width: 100%;
+        input {
+          width: 100%;
+          padding: 7px 10px;
+          border-radius: 5px;
+          font-size: 14px;
+          color: $black;
+          font-weight: 600;
+          &::placeholder {
+            font-weight: 300;
+            color: rgba(0, 0, 0, 0.7);
+          }
+        }
+      }
+    }
+  }
 }
