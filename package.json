@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/polyfill": "^7.0.0",
     "autoprefixer": "^9.4.2",
     "aws-sdk": "^2.400.0",
