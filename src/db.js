@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-mongoose.connect(process.env.DATABASE_MLAB, {
+const dbUrl = process.env.PRODUCTION ? process.env.DATABASE_MLAB : process.env.DATABASE_LOCAL;
+console.log(dbUrl);
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useFindAndModify: false
 });

@@ -3,8 +3,8 @@ mixin videoPlayer(video = {})
         //- ISSUE: safari에서 재생이 안되어 찾아보니 좀 바뀐듯 함
         //- video(src=video.fileUrl)
         video
-            source(src=video.fileUrl type="video/mp4")
-            source(src=video.fileUrl type="video/webm")
+            source(src=`${hostUrl}${video.fileUrl}` type="video/mp4")
+            source(src=`${hostUrl}${video.fileUrl}` type="video/webm")
         .videoPlayer__controls
             .videoPlayer__column
                 input.videoPlayer__volume#jsVolume(type="range", min="0", max="1", step="0.1", value="0.5")

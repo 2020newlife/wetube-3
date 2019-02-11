@@ -12,7 +12,7 @@
     "build:assets": "WEBPACK_ENV=production webpack --config src/webpack.config.js",
     "prebuild": "rm -rf build",
     "build": "npm run build:server && npm run build:assets && cp -R src/static build && cp -R src/views build",
-    "start": "npm run build && node build/app.js"
+    "start": "npm run build && PRODUCTION=true node build/app.js"
   },
   "author": "",
   "license": "ISC",

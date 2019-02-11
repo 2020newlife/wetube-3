@@ -20,15 +20,18 @@ const app = express();
 
 const CookieStore = ConnectMongo(session);
 
+// host url
+process.env.HOST = process.env.PRODUCTION ? '' : `http://localhost:${process.env.SERVER_PORT}/`;
+
 // view engine
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // static
-// app.use('/uploads', express.static('uploads'));
-// app.use('/static', express.static('static'));
 app.use('/uploads', express.static('uploads'));
 app.use('/static', express.static(path.join(__dirname, 'static')));
+// app.use('/uploads', express.static('uploads'));
+// app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // middlewares
 app.use(helmet());

@@ -5,12 +5,12 @@ block content
     .user-profile
         .user-profile__header
             if user.avatarUrl
-                img.user-avatar(src=user.avatarUrl)
+                img.user-avatar(src=`${hostUrl}${user.avatarUrl}`)
             h4.profile__username=user.name
         if loginUser && user.id === loginUser.id
             .user-profile__buttons
                 a.form-container__link(href=urls.editProfile) Edit Profile
                 a.form-container__link(href=urls.changePassword) Change Password
         .home-videos
-            each video in user.videos 
+            each video in user.videos.reverse()
                 +videoBlock(video)
