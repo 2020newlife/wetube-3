@@ -4,7 +4,7 @@ import Video from '../models/Video';
 
 import * as userController from '../controllers/user.controller';
 import * as videoController from '../controllers/video.controller';
-import { onlyPublic, onlyPrivate, uploadVideo, uploadAvatar } from '../middlewares';
+import { onlyPublic, onlyPrivate, uploadVideo, uploadAvatar, blockApi } from '../middlewares';
 
 const router = express.Router();
 
@@ -19,8 +19,8 @@ router.get(urls.home, async (req, res) => {
 });
 
 // join
-router.get(urls.join, onlyPublic, userController.getJoin);
-router.post(urls.join, onlyPublic, userController.postJoin, userController.postLogin);
+router.get(urls.join, blockApi, onlyPublic, userController.getJoin);
+router.post(urls.join, blockApi, onlyPublic, userController.postJoin, userController.postLogin);
 
 // login
 router.get(urls.login, onlyPublic, userController.getLogin);

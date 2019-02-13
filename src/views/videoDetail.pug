@@ -31,10 +31,11 @@ block content
                     span.video__comment-number
                         span#jsCommentNumber #{video.comments.length}
                         | comments             
-                form#jsAddCommentForm(action=`/api${urls.api.addComment}`, method="post")
-                    input(type="hidden", name="videoId", value=video.id)
-                    input(type="text", placeholder="Add a comment", name="comment")
-                    input(type="submit", value="send")
+                if loginUser
+                    form#jsAddCommentForm(action=`/api${urls.api.addComment}`, method="post")
+                        input(type="hidden", name="videoId", value=video.id)
+                        input(type="text", placeholder="Add a comment", name="comment")
+                        input(type="submit", value="send")
             ul.video__comments-list#jsCommentList
                 each comment in video.comments.reverse()
                     +commentBlock(comment)

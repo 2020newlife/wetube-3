@@ -58,6 +58,9 @@ app.use(localMiddleware);
 // routes
 app.use('/', globalRouter);
 app.use('/api', apiRouter);
+app.use((req, res) => {
+  res.render('404');
+});
 
 // run
 const PORT = process.env.SERVER_PORT || 4000;

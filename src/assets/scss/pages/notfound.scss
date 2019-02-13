@@ -1,0 +1,20 @@
+.error__not_found {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  .error__not_found_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    i {
+      font-size: 100px;
+      color: $red;
+      margin-bottom: 20px;
+    }
+    span {
+      font-size: 30px;
+      color: $dark-red;
+    }
+  }
+}

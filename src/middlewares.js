@@ -60,3 +60,8 @@ export const onlyPrivate = (req, res, next) => {
     res.redirect(urls.home);
   }
 };
+
+export const blockApi = (req, res) => {
+  req.flash('info', 'This Request not available. Contact me');
+  res.redirect(req.get('referer'));
+};

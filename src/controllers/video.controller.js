@@ -1,5 +1,6 @@
 // import fs from 'fs.promised';
 import aws from 'aws-sdk';
+import { runInNewContext } from 'vm';
 import Video from '../models/Video';
 import urls from '../urls';
 import Comment from '../models/Comment';
@@ -33,12 +34,16 @@ export const postUpload = async (req, res) => {
   res.redirect(`${urls.videoDetail}/${newVideo.id}`);
 };
 
-export const getVideoDetail = async (req, res) => {
+export const getVideoDetail = async (req, res, next) => {
   const { id } = req.params;
-  const video = await Video.findById(id)
-    .populate('creator')
-    .populate('comments');
-  res.render('videoDetail', { pageName: 'Video Detail', video });
+  try {
+    const video = await Video.findById(id)
+      .populate('creator')
+      .populate('comments');
+    res.render('videoDetail', { pageName: 'Video Detail', video });
+  } catch (error) {
+    next();
+  }
 };
 
 export const getEditVideo = async (req, res) => {
