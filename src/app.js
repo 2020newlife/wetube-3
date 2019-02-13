@@ -11,6 +11,7 @@ import session from 'express-session';
 import ConnectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 import path from 'path';
+import flash from 'express-flash';
 import globalRouter from './routers/global.router';
 import apiRouter from './routers/api.router';
 import { localMiddleware } from './middlewares';
@@ -49,6 +50,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // locals middlewares
 app.use(localMiddleware);

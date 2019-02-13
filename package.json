@@ -12,7 +12,7 @@
     "build:assets": "WEBPACK_ENV=production webpack --config src/webpack.config.js",
     "prebuild": "rm -rf build",
     "build": "npm run build:server && npm run build:assets && cp -R src/static build && cp -R src/views build",
-    "start": "npm run build && PRODUCTION=true forever start build/app.js"
+    "start": "npm run build && PRODUCTION=true sudo forever start build/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,7 +28,9 @@
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "express-flash": "0.0.2",
     "express-session": "^1.15.6",
+    "flash": "^1.1.0",
     "forever": "^0.15.3",
     "fs.promised": "^3.0.0",
     "get-blob-duration": "^1.0.1",

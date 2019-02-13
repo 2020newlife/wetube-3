@@ -10,6 +10,7 @@ export const getJoin = (req, res) => {
 export const postJoin = async (req, res, next) => {
   const { name, email, password, password2 } = req.body;
   if (password !== password2) {
+    req.flash('error', "Passwords don't match");
     res.status(400);
     res.render('join', { pageName: 'Join' });
   } else {
@@ -34,16 +35,20 @@ export const getLogin = (req, res) => {
 
 export const postLogin = passport.authenticate('local', {
   successRedirect: urls.home,
-  failureRedirect: urls.login
+  failureRedirect: urls.login,
+  successFlash: 'Welcome Flash Message',
+  failureFlash: "Can't login. check email or password"
 });
 
 // login - github
-export const getGithubLogin = passport.authenticate('github');
-
-export const getGithubLoginCallback = passport.authenticate('github', {
-  successRedirect: urls.home,
-  failureRedirect: urls.login
+export const getGithubLogin = passport.authenticate('github', {
+  successFlash: 'Welcome',
+  failureFlash: "Can't login"
 });
+
+export const getGithubLoginCallback = (req, res) => {
+  res.redirect(urls.home);
+};
 
 export const githubLoginCallBack = async (_, __, profile, cb) => {
   const {
@@ -75,15 +80,16 @@ export const githubLoginCallBack = async (_, __, profile, cb) => {
 };
 
 // login - facebook
-export const getFacebookLogin = passport.authenticate('facebook');
-
-export const getFacebookLoginCallback = passport.authenticate('facebook', {
-  successRedirect: urls.home,
-  failureRedirect: urls.login
+export const getFacebookLogin = passport.authenticate('facebook', {
+  successFlash: 'Welcome',
+  failureFlash: "Can't login"
 });
 
+export const getFacebookLoginCallback = (req, res) => {
+  res.redirect(urls.home);
+};
+
 export const facebookLoginCallback = async (accessToken, refreshToken, profile, cb) => {
-  console.log(profile);
   const {
     _json: { id, name, email }
   } = profile;
@@ -110,6 +116,7 @@ export const facebookLoginCallback = async (accessToken, refreshToken, profile, 
 
 // logout
 export const getLogout = (req, res) => {
+  req.flash('info', 'Logged out');
   req.logout();
   res.redirect(urls.home);
 };
@@ -120,6 +127,7 @@ export const getProfile = async (req, res) => {
     const user = await User.findById(req.params.userId).populate('videos');
     res.render('profile', { pageName: 'User Profile', user });
   } catch (error) {
+    req.flash('error', 'User not found');
     res.redirect(urls.home);
   }
 };
@@ -147,8 +155,10 @@ export const postEditProfile = async (req, res) => {
       email,
       avatarUrl: fileUrl
     });
+    req.flash('success', 'Profile updated');
     res.redirect(urls.profile);
   } catch (error) {
+    req.flash('error', "Can't update profile");
     res.redirect(urls.profile);
   }
 };
@@ -165,6 +175,7 @@ export const postChangePassword = async (req, res) => {
 
   try {
     if (newPassword !== confirmPassword) {
+      req.flash('error', 'Passwords not match');
       res.status(400);
       res.redirect(urls.changePassword);
       return;
@@ -174,6 +185,7 @@ export const postChangePassword = async (req, res) => {
 
     res.redirect(urls.profile);
   } catch (error) {
+    req.flash('error', "Can't change password");
     res.status(400);
     res.redirect(urls.changePassword);
   }
