@@ -15,7 +15,9 @@ main {
   max-width: 1400px;
   margin: 0 auto;
   min-height: 70%;
-  height: 70%;
+  // ISSUE: .error__not_found 를 세로 중앙정렬하기 위해 height를 추가했지만
+  // 이렇게 되면 컨텐츠 길이가 길어져도 main부분이 늘어나지 않음. 중앙 세로정렬하는법 알아볼 것
+  // height: 70%;
 }
 
 button,
