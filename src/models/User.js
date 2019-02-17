@@ -25,6 +25,9 @@ UserSchema.plugin(passportLocalMongoose, {
   usernameField: 'email'
 });
 
+// ISSUE: email을 변경할 경우 즉시 로그아웃 되는 현상 발생.
+// serialize, deserialize에 usernameField가 아닌 id를 사용하도록 변경
+// https://github.com/saintedlama/passport-local-mongoose/issues/46
 UserSchema.statics.serializeUser = () => (user, cb) => cb(null, user.id);
 
 UserSchema.statics.deserializeUser = function() {

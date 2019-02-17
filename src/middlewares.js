@@ -61,7 +61,11 @@ export const onlyPrivate = (req, res, next) => {
   }
 };
 
-export const blockApi = (req, res) => {
-  req.flash('info', 'This Request not available. Contact me');
-  res.redirect(req.get('referer'));
+export const blockApi = (req, res, next) => {
+  if (process.env.PRODUCTION) {
+    req.flash('info', 'This Request not available. Contact me');
+    res.redirect(req.get('referer'));
+  } else {
+    next();
+  }
 };
