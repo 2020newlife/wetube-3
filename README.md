@@ -14,7 +14,7 @@
 - $sudo npm start
 
 ## sample of .env
-
+```
 SERVER_PORT=[whatever]
 DATABASE_LOCAL=mongodb://localhost:27017/[whatever]
 DATABASE_MLAB=mongodb mlab url
@@ -29,6 +29,6 @@ FACEBOOK_SECRET=facebook auth secret
 AWS_KEY=aws user key
 AWS_SECRET=aws user secret
 AWS_BUCKET=aws bucket name
-
+```
 ## Nomadcoders
 https://academy.nomadcoders.co/
