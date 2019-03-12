@@ -1,6 +1,5 @@
 // import fs from 'fs.promised';
 import aws from 'aws-sdk';
-import { runInNewContext } from 'vm';
 import Video from '../models/Video';
 import urls from '../urls';
 import Comment from '../models/Comment';
@@ -40,6 +39,14 @@ export const getVideoDetail = async (req, res, next) => {
     const video = await Video.findById(id)
       .populate('creator')
       .populate('comments');
+    // ISSUE: nested populate
+    // const video = await Video.findById(id)
+    //   .populate('comments')
+    //   .populate({
+    //     path: 'creator',
+    //     model: 'User'
+    //   });
+    console.log(video);
     res.render('videoDetail', { pageName: 'Video Detail', video });
   } catch (error) {
     next();
