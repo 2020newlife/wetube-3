@@ -3,6 +3,7 @@ import aws from 'aws-sdk';
 import Video from '../models/Video';
 import urls from '../urls';
 import Comment from '../models/Comment';
+import User from '../models/User';
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_KEY,
@@ -92,14 +93,14 @@ export const getEditVideo = async (req, res) => {
 };
 
 export const getDeleteVideo = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    /* ISSUE: not working
+  const { id } = req.params;
+  /* ISSUE: not working
     const video = await Video.findById(id);
      */
-    const video = await Video.findById(id).populate('creator');
+  const video = await Video.findById(id).populate('creator');
+  const creator = await User.findById(video.creator);
 
+  try {
     console.log('prod: ', process.env.PRODUCTION);
     if (video.creator.id !== req.user.id) {
       throw Error();
@@ -122,15 +123,22 @@ export const getDeleteVideo = async (req, res) => {
         }
       });
       await video.remove();
+      await creator.videos.remove(video.id);
+      await creator.save();
     } else {
       // dev environment
       // file delete on local storage
       console.log('delete local', video.fileUrl);
       await fs.unlink(video.fileUrl);
       await video.remove();
+      await creator.videos.remove(video.id);
+      await creator.save();
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    console.log('deleted video: ', video);
+    console.log('deleted video: ', video.id);
   }
   res.redirect(urls.home);
 };
