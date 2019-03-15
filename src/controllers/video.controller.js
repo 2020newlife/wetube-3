@@ -1,4 +1,4 @@
-// import fs from 'fs.promised';
+import fs from 'fs.promised';
 import aws from 'aws-sdk';
 import Video from '../models/Video';
 import urls from '../urls';
@@ -46,7 +46,6 @@ export const getVideoDetail = async (req, res, next) => {
     //     path: 'creator',
     //     model: 'User'
     //   });
-    console.log(video);
     res.render('videoDetail', { pageName: 'Video Detail', video });
   } catch (error) {
     next();
@@ -101,13 +100,11 @@ export const getDeleteVideo = async (req, res) => {
      */
     const video = await Video.findById(id).populate('creator');
 
+    console.log('prod: ', process.env.PRODUCTION);
     if (video.creator.id !== req.user.id) {
       throw Error();
-    } else {
-      // file delete on local storage
-      // await fs.unlink(video.fileUrl);
-      // await video.remove();
-
+    } else if (process.env.PRODUCTION) {
+      // prod environment
       // file delete on aws s3
       const tmpArray = video.fileUrl.split('/');
       const fileName = tmpArray[tmpArray.length - 1];
@@ -124,6 +121,12 @@ export const getDeleteVideo = async (req, res) => {
           console.log(data);
         }
       });
+      await video.remove();
+    } else {
+      // dev environment
+      // file delete on local storage
+      console.log('delete local', video.fileUrl);
+      await fs.unlink(video.fileUrl);
       await video.remove();
     }
   } catch (error) {
